@@ -10,8 +10,15 @@ internal class GildedRoseTest {
         val items = arrayOf<Item>(Item("foo", 0, 0))
         val app = GildedRose(items)
         app.updateQuality()
-        assertEquals("fixme", app.items[0].name)
+        assertEquals("foo", app.items[0].name)
+    }
 
+    @Test
+    fun goldenMaster() {
+        val items = arrayOf(Item("foo", 0, 0))
+        val app = GildedRose(items)
+        app.updateQuality()
+        org.approvaltests.Approvals.verifyAll("items", items)
     }
 
 }

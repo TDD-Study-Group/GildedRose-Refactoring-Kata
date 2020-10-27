@@ -4,59 +4,64 @@ class GildedRose(var items: Array<Item>) {
 
     fun updateQuality() {
         for (item in items) {
-            fun reduceItemQuality(){
+            fun reduceQuality() {
                 if (item.quality > 0) {
                     item.quality = item.quality - 1
                 }
             }
-            if (item.name == "Aged Brie") {
+
+            fun increaseQuality() {
                 if (item.quality < 50) {
                     item.quality = item.quality + 1
                 }
+            }
+
+            fun reduceSellIn() {
                 item.sellIn = item.sellIn - 1
+            }
+
+
+            if (item.name == "Aged Brie") {
+                increaseQuality()
+                reduceSellIn()
                 if (item.sellIn < 0) {
-                    if (item.quality < 50) {
-                        item.quality = item.quality + 1
-                    }
+                    increaseQuality()
                 }
             } else if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
                 if (item.quality < 50) {
                     item.quality = item.quality + 1
 
                     if (item.sellIn < 11) {
-                        if (item.quality < 50) {
-                            item.quality = item.quality + 1
-                        }
+                        increaseQuality()
                     }
 
                     if (item.sellIn < 6) {
-                        if (item.quality < 50) {
-                            item.quality = item.quality + 1
-                        }
+                        increaseQuality()
                     }
                 }
-                item.sellIn = item.sellIn - 1
+                reduceSellIn()
                 if (item.sellIn < 0) {
-                    item.quality = item.quality - item.quality
+                    item.quality = 0
                 }
             } else if (item.name == "Sulfuras, Hand of Ragnaros") {
             } else if (item.name.startsWith("Conjured")) {
-                reduceItemQuality()
-                reduceItemQuality()
-                item.sellIn = item.sellIn - 1
+                reduceQuality()
+                reduceQuality()
+                reduceSellIn()
                 if (item.sellIn < 0) {
-                    reduceItemQuality()
-                    reduceItemQuality()
+                    reduceQuality()
+                    reduceQuality()
                 }
             } else {
-                reduceItemQuality()
-                item.sellIn = item.sellIn - 1
+                reduceQuality()
+                reduceSellIn()
                 if (item.sellIn < 0) {
-                    reduceItemQuality()
+                    reduceQuality()
                 }
             }
         }
     }
+
 
 }
 

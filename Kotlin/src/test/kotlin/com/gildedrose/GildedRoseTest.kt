@@ -17,6 +17,16 @@ internal class GildedRoseTest {
     }
 
     @Test
+    fun conjuredItem() {
+        val items = arrayOf(Item("Conjured Mana Cake", 3, 6))
+        val app = GildedRose(items)
+        app.updateQuality()
+        assertEquals(2, app.items[0].sellIn)
+        assertEquals(4, app.items[0].quality)
+    }
+
+
+    @Test
     fun goldenMaster() {
         val items = genarateItems(10000)
         val app = GildedRose(items)

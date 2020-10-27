@@ -46,29 +46,37 @@ class AgedBrie(item: Item) : ItemAdapter(item) {
 class BackstagePass(item: Item) : ItemAdapter(item) {
     override fun update() {
         increaseQuality()
-        if (item.sellIn < 11) increaseQuality()
-        if (item.sellIn < 6) increaseQuality()
+        if (lessThanElevenDaysLeft()) increaseQuality()
+        if (lessThanSixDaysLeft()) increaseQuality()
         reduceSellIn()
-        if (reachedSellIn()) item.quality = 0
+        if (reachedSellIn()) reduceToMinimumQuality()
     }
+
+    private fun reduceToMinimumQuality() {
+        item.quality = 0
+    }
+
+    private fun lessThanSixDaysLeft() = item.sellIn < 6
+
+    private fun lessThanElevenDaysLeft() = item.sellIn < 11
 }
 
 class Sulfuras(item: Item) : ItemAdapter(item) {
-    override fun update() {
-
-    }
+    override fun update() {}
 }
 
 class Conjured(item: Item) : ItemAdapter(item) {
     override fun update() {
-        reduceQuality()
-        reduceQuality()
+        reduceQualityTwiceAsOften()
         reduceSellIn()
         if (reachedSellIn()) {
-            reduceQuality()
-            reduceQuality()
+            reduceQualityTwiceAsOften()
         }
+    }
 
+    private fun reduceQualityTwiceAsOften() {
+        reduceQuality()
+        reduceQuality()
     }
 }
 

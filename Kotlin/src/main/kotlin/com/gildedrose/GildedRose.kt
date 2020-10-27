@@ -4,28 +4,34 @@ class GildedRose(var items: Array<Item>) {
 
     fun updateQuality() {
         for (item in items) {
-            updateItem(item)
+            val itemType: ItemAdapter = if (item.name == "Aged Brie") {
+                AgedBrie(item)
+            } else if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
+                BackstagePass(item)
+            } else {
+                Normal(item)
+            }
+            itemType.update()
         }
     }
+}
 
-    private fun updateItem(item: Item) {
-        fun reduceQuality() {
-            if (item.quality > 0) item.quality = item.quality - 1
-        }
 
-        fun increaseQuality() {
-            if (item.quality < 50) item.quality = item.quality + 1
-        }
+sealed class ItemAdapter(val item: Item) {
+    protected fun reduceQuality() {
+        if (item.quality > 0) item.quality = item.quality - 1
+    }
 
-        fun reduceSellIn() {
-            item.sellIn = item.sellIn - 1
-        }
+    protected fun increaseQuality() {
+        if (item.quality < 50) item.quality = item.quality + 1
+    }
 
-        if (item.name == "Aged Brie") {
-            increaseQuality()
-            reduceSellIn()
-            if (item.sellIn < 0) increaseQuality()
-        } else if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
+    protected fun reduceSellIn() {
+        item.sellIn = item.sellIn - 1
+    }
+
+    open fun update() {
+        if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
             increaseQuality()
             if (item.sellIn < 11) increaseQuality()
             if (item.sellIn < 6) increaseQuality()
@@ -47,8 +53,17 @@ class GildedRose(var items: Array<Item>) {
                 reduceQuality()
             }
         }
-    }
 
+    }
 
 }
 
+class AgedBrie(item: Item) : ItemAdapter(item) {
+    override fun update() {
+        increaseQuality()
+        reduceSellIn()
+        if (item.sellIn < 0) increaseQuality()
+    }
+}
+
+class Normal(item: Item) : ItemAdapter(item) {}

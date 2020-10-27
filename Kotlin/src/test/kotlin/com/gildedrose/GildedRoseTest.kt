@@ -1,5 +1,6 @@
 package com.gildedrose
 
+import org.approvaltests.Approvals.verifyAll
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -15,10 +16,14 @@ internal class GildedRoseTest {
 
     @Test
     fun goldenMaster() {
-        val items = arrayOf(Item("foo", 0, 0))
+        val items = genarateItems()
         val app = GildedRose(items)
         app.updateQuality()
-        org.approvaltests.Approvals.verifyAll("items", items)
+        verifyAll("items", items)
+    }
+
+    private fun genarateItems(): Array<Item> {
+        return arrayOf(Item("foo", 0, 0))
     }
 
 }

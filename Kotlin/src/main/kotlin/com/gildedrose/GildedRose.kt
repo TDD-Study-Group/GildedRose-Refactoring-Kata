@@ -4,6 +4,11 @@ class GildedRose(var items: Array<Item>) {
 
     fun updateQuality() {
         for (item in items) {
+            fun reduceItemQuality(){
+                if (item.quality > 0) {
+                    item.quality = item.quality - 1
+                }
+            }
             if (item.name == "Aged Brie") {
                 if (item.quality < 50) {
                     item.quality = item.quality + 1
@@ -36,18 +41,20 @@ class GildedRose(var items: Array<Item>) {
                 }
             } else if (item.name == "Sulfuras, Hand of Ragnaros") {
             } else if (item.name.startsWith("Conjured")) {
-            } else {
-                if (item.quality > 0) {
-                    item.quality = item.quality - 1
-                }
+                reduceItemQuality()
+                reduceItemQuality()
                 item.sellIn = item.sellIn - 1
                 if (item.sellIn < 0) {
-                    if (item.quality > 0) {
-                        item.quality = item.quality - 1
-                    }
+                    reduceItemQuality()
+                    reduceItemQuality()
+                }
+            } else {
+                reduceItemQuality()
+                item.sellIn = item.sellIn - 1
+                if (item.sellIn < 0) {
+                    reduceItemQuality()
                 }
             }
-
         }
     }
 

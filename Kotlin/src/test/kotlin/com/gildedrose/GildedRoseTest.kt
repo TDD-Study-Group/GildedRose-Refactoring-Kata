@@ -25,6 +25,15 @@ internal class GildedRoseTest {
         assertEquals(4, app.items[0].quality)
     }
 
+    @Test
+    fun conjuredItemWithNegativSellIn() {
+        val items = arrayOf(Item("Conjured Mana Cake", -1, 6))
+        val app = GildedRose(items)
+        app.updateQuality()
+        assertEquals(-2, app.items[0].sellIn)
+        assertEquals(2, app.items[0].quality)
+    }
+
 
     @Test
     fun goldenMaster() {

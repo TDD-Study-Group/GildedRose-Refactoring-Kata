@@ -35,7 +35,7 @@ internal class GildedRoseTest {
     }
 
     private fun generateName(): String {
-        val possibleNames = listOf("foo", "Aged Brie")
+        val possibleNames = listOf("foo", "Aged Brie", "Sulfuras, Hand of Ragnaros", "Backstage passes to a TAFKAL80ETC concert")
         return possibleNames[random.nextInt(0, possibleNames.size)]
     }
 
